@@ -10,9 +10,14 @@
 
 #include "Player.h"
 #include "Background.h"
+#include "Texture.h"
 
 Shader* backgroundShader;
 Background* background;
+
+Shader* playerShader;
+Texture* playerTexture;
+Player* player;
 
 int previousTime = 0;
 
@@ -28,9 +33,9 @@ void RenderFunction(void)
 
 	
 
-	//Shader playerShader = Shader("player.vert", "player.frag");
-	//Player player = Player(&playerShader);
+
 	background->render();
+	player->render();
 
 	glFlush();
 	glutPostRedisplay();
@@ -56,6 +61,9 @@ int main(int argc, char* argv[])
 	backgroundShader = new Shader("background.vert", "background.frag");
 	background = new Background(backgroundShader);
 
+	playerShader = new Shader("player.vert", "player.frag");
+	playerTexture = new Texture("player.jpg");
+	player = new Player(playerShader, playerTexture);
 
 	glutMainLoop();
 }

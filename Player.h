@@ -1,15 +1,18 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include "base/Shader.h"
+#include "Texture.h"
 
 class Player {
 private:
 	Shader* shader = nullptr;
+	Texture* texture = nullptr;
 
-	float vertices[9] = {
-	-0.5f, -0.5f, 0.0f,
-	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	float vertices[20] = {
+		0, 0, 0, 0, 1,
+		0.1, 0, 0, 1, 1,
+		0.1, 0.1, 0, 1, 0,
+		0, 0.1, 0, 0, 0,
 	};
 
 	unsigned int VBO;
@@ -17,9 +20,9 @@ private:
 
 public:
 
-	Player(Shader* shader);
+	Player(Shader* shader, Texture* texture);
 
-	void draw();
+	void render();
 	void freeResources();
 };
 
