@@ -94,13 +94,13 @@
     <Filter Include="Header Files\base">
       <UniqueIdentifier>{7a74e743-eccb-4226-b66d-2a0c8c972340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\shaders\player">
+      <UniqueIdentifier>{4eefc77b-1bec-4b07-a90e-fdbc36dccb73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\imageloader.cpp">
-      <Filter>Source Files\template-built-ins\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\loadShaders.cpp">
       <Filter>Source Files\template-built-ins\Utils</Filter>
@@ -113,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="src\base\Shader.cpp">
       <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imageloader.cpp">
+      <Filter>Source Files\template-built-ins\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1010,6 +1016,9 @@
     <ClInclude Include="include\base\Shader.h">
       <Filter>Header Files\base</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="include\glm\CMakeLists.txt">
@@ -1490,6 +1499,12 @@
     </None>
     <None Include="lib\x64\GL\DLLs\glew32.dll">
       <Filter>Resource Files\template-built-ins\DLLs\64b</Filter>
+    </None>
+    <None Include="player.vert">
+      <Filter>Resource Files\shaders\player</Filter>
+    </None>
+    <None Include="player.frag">
+      <Filter>Resource Files\shaders\player</Filter>
     </None>
   </ItemGroup>
 </Project>

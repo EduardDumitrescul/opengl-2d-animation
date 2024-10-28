@@ -7,6 +7,7 @@
 #include <GL/freeglut.h> // nu trebuie uitat freeglut.h
 #include "loadShaders.h"
 #include "base/Shader.h"
+#include "Player.h"
 
 
 //////////////////////////////////////
@@ -96,9 +97,9 @@ void RenderFunction(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);       
 
-	// Functiile de desenare
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawArrays(GL_TRIANGLES, 3, 3);
+	Shader playerShader = Shader("player.vert", "player.frag");
+	Player player = Player(&playerShader);
+	player.draw();
 
 	glFlush();
 }
