@@ -26,6 +26,9 @@ Player::Player(Shader* shader, Texture* texture) {
 
 void Player::render() {
 	shader->use();
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(width, height, 1.0));
+	shader->setMat4(scaleMatrixTag,scaleMatrix);
+	
 	texture->use();
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);

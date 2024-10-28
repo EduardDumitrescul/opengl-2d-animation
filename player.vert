@@ -5,8 +5,10 @@ layout (location = 1) in vec2 aTexCoord;
 out vec3 ourColor;
 out vec2 TexCoord;
 
+uniform mat4 scaleMatrix;
+
 void main()
 {
-    gl_Position = vec4(aPos, 1.0);
+    gl_Position = scaleMatrix * vec4(aPos, 1.0);
     TexCoord = aTexCoord;
 }
