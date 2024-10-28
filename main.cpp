@@ -34,6 +34,7 @@ void RenderFunction(void)
     int deltaTime = currentTime - previousTime;
     previousTime = currentTime;
 
+    player->update(deltaTime);
     background->update(deltaTime);  // Update background based on deltaTime
 
     glClear(GL_COLOR_BUFFER_BIT); // Clear color buffer
@@ -42,6 +43,15 @@ void RenderFunction(void)
     player->render();     // Render player
 
     glutSwapBuffers();    // Swap buffers for smooth animation (double-buffered display)
+}
+
+void UserControls(unsigned char key, int x, int y) {
+    switch (key) {
+        case ' ': {
+            player->jump();
+            break;
+        }
+    }
 }
 
 void Cleanup(void)
@@ -58,7 +68,7 @@ int main(int argc, char* argv[])
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB); // Set up a double-buffered display mode
     glutInitWindowPosition(100, 100);            // Initial window position
-    glutInitWindowSize(600, 600);                // Window dimensions
+    glutInitWindowSize(1600, 960);                // Window dimensions
     glutCreateWindow("Grafica pe calculator - primul exemplu"); // Window title
     glewInit();                                  // Initialize GLEW
 
@@ -73,6 +83,8 @@ int main(int argc, char* argv[])
     playerShader = new Shader("player.vert", "player.frag");
     playerTexture = new Texture("player.jpg");
     player = new Player(playerShader, playerTexture);
+
+    glutKeyboardFunc(UserControls);
 
     // Initialize timer function to control frame rate
     glutTimerFunc(frameDelay, TimerFunction, 0);
