@@ -9,17 +9,31 @@
 #include "base/Shader.h"
 
 #include "Player.h"
+#include "Background.h"
+
+Shader* backgroundShader;
+Background* background;
+
+int previousTime = 0;
+
 
 void RenderFunction(void)
 {
+	int currentTime = glutGet(GLUT_ELAPSED_TIME); // current time in milliseconds
+	int deltaTime = (currentTime - previousTime);
+	previousTime = currentTime;
+	background->update(deltaTime);
+
 	glClear(GL_COLOR_BUFFER_BIT);       
 
-	Shader playerShader = Shader("player.vert", "player.frag");
-	Player player = Player(&playerShader);
-	player.draw();
-	player.freeResources();
+	
+
+	//Shader playerShader = Shader("player.vert", "player.frag");
+	//Player player = Player(&playerShader);
+	background->render();
 
 	glFlush();
+	glutPostRedisplay();
 }
 void Cleanup(void)
 {
@@ -28,6 +42,8 @@ void Cleanup(void)
 
 int main(int argc, char* argv[])
 {
+
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(100, 100); // pozitia initiala a ferestrei
@@ -36,6 +52,11 @@ int main(int argc, char* argv[])
 	glewInit(); // nu uitati de initializare glew; trebuie initializat inainte de a a initializa desenarea
 	glutDisplayFunc(RenderFunction);
 	glutCloseFunc(Cleanup);
+
+	backgroundShader = new Shader("background.vert", "background.frag");
+	background = new Background(backgroundShader);
+
+
 	glutMainLoop();
 }
 

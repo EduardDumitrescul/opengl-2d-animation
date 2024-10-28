@@ -97,6 +97,9 @@
     <Filter Include="Resource Files\shaders\player">
       <UniqueIdentifier>{4eefc77b-1bec-4b07-a90e-fdbc36dccb73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\shaders\background">
+      <UniqueIdentifier>{00bc2f92-8fc2-4abe-866e-00d00b73bc30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,6 +121,9 @@
       <Filter>Source Files\template-built-ins\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1019,6 +1025,9 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="include\glm\CMakeLists.txt">
@@ -1505,6 +1514,12 @@
     </None>
     <None Include="player.frag">
       <Filter>Resource Files\shaders\player</Filter>
+    </None>
+    <None Include="background.frag">
+      <Filter>Resource Files\shaders\background</Filter>
+    </None>
+    <None Include="background.vert">
+      <Filter>Resource Files\shaders\background</Filter>
     </None>
   </ItemGroup>
 </Project>
