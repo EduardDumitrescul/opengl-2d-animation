@@ -24,3 +24,8 @@ void Player::draw() {
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
+
+void Player::freeResources() {
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+}

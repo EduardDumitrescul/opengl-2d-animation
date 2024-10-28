@@ -114,11 +114,11 @@
     <ClCompile Include="src\base\Shader.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\imageloader.cpp">
       <Filter>Source Files\template-built-ins\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1017,7 +1017,7 @@
       <Filter>Header Files\base</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

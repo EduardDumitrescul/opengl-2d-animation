@@ -18,6 +18,8 @@ private:
 public:
 
 	Player(Shader* shader);
+
 	void draw();
+	void freeResources();
 };
 
