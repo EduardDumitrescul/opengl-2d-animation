@@ -28,12 +28,12 @@ void Background::update(int deltaTime) {
 	if (offset < -4) {
 		offset += 4;
 	}
-
-	shader->setFloat("xOffset", offset);
 }
 
 void Background::render(){
 	shader->use();
+	shader->setFloat("xOffset", offset);
+
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawArrays(GL_TRIANGLES, 1, 3);
