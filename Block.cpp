@@ -21,6 +21,12 @@ Block::Block(Shader* shader, Texture* texture)
 	glEnableVertexAttribArray(1);
 }
 
+void Block::setPosition(float x, float y)
+{
+	xPosition = x;
+	yPosition = y;
+}
+
 void Block::render()
 {
 	shader->use();

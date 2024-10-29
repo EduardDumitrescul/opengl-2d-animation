@@ -29,6 +29,7 @@ private:
 public:
 	Block(Shader* shader, Texture* texture);
 
+	void setPosition(float x, float y);
 	void render();
 	void freeResources();
 };

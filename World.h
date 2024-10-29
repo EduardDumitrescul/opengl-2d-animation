@@ -11,6 +11,7 @@ private:
 
 	int previousTime = 0;
 	const int width = 80, height = 24;
+	const float blockWidth = 2.0 / 40, blockHeight = 2.0 / 24;
 
 	char map[24][80] = {
 		"...............................................................................",
@@ -34,10 +35,16 @@ private:
 		"...............................................................................",
 		"...............................................................................",
 		"...............................................................................",
-		"...............................................................................",
+		"........x...........x..............x...........x...............................",
 		"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		"...............................................................................",
 	};
+
+	Block* blocks[24][80];
+
+	int columnOffset = 0;
+
+
 	Shader* playerShader;
 	Shader* backgroundShader;
 	Shader* blockShader;
@@ -64,6 +71,27 @@ private:
 		background =new  Background(backgroundShader);
 	}
 
+	void loadBlocks() {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (map[i][j] == 'x') {
+					blocks[i][j] = new Block(blockShader, blockTexture);
+				}
+			}
+		}
+	}
+
+	void renderBlocks() {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (map[i][j] == 'x') {
+					blocks[i][j]->setPosition(-(j - 20) * blockWidth, -(i - 12) * blockHeight);
+					blocks[i][j]->render();
+				}
+			}
+		}
+	}
+
 	void update() {
 		int currentTime = glutGet(GLUT_ELAPSED_TIME); // Get current time in milliseconds
 		int deltaTime = currentTime - previousTime;
@@ -77,18 +105,16 @@ private:
 		loadShaders();
 		loadTextures();
 		createObjects();
+		loadBlocks();
 	}
 public:
-
-
-
-
 	static void render() {
 		instance->update();
 		glClear(GL_COLOR_BUFFER_BIT); 
 
 		instance->background->render();
 		instance->player->render();
+		instance->renderBlocks();
 
 		glutSwapBuffers();
 	}
