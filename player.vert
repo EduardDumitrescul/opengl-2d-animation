@@ -7,9 +7,10 @@ out vec2 TexCoord;
 
 uniform mat4 scaleMatrix;
 uniform mat4 translateMatrix;
+uniform mat4 rotationMatrix;
 
 void main()
 {
-    gl_Position = translateMatrix * scaleMatrix * vec4(aPos, 1.0);
+    gl_Position = translateMatrix * scaleMatrix * rotationMatrix * vec4(aPos, 1.0);
     TexCoord = aTexCoord;
 }
