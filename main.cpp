@@ -6,21 +6,7 @@
 #include "loadShaders.h"
 #include "base/Shader.h"
 
-#include "Player.h"
-#include "Background.h"
-#include "Texture.h"
-#include "Block.h"
-
-Shader* backgroundShader;
-Background* background;
-
-Shader* playerShader;
-Texture* playerTexture;
-Player* player;
-
-Shader* blockShader;
-Texture* blockTexture;
-Block* block;
+#include "World.h"
 
 int previousTime = 0;
 const int FPS = 60;
@@ -33,68 +19,59 @@ void TimerFunction(int value)
     glutTimerFunc(frameDelay, TimerFunction, 0);
 }
 
-void RenderFunction(void)
-{
-    int currentTime = glutGet(GLUT_ELAPSED_TIME); // Get current time in milliseconds
-    int deltaTime = currentTime - previousTime;
-    previousTime = currentTime;
+//void RenderFunction(void)
+//{
+//    int currentTime = glutGet(GLUT_ELAPSED_TIME); // Get current time in milliseconds
+//    int deltaTime = currentTime - previousTime;
+//    previousTime = currentTime;
+//
+//    player->update(deltaTime);
+//    background->update(deltaTime);  // Update background based on deltaTime
+//
+//    glClear(GL_COLOR_BUFFER_BIT); // Clear color buffer
+//
+//    background->render(); // Render background
+//    player->render();     // Render player
+//    block->render();
+//
+//    glutSwapBuffers();    // Swap buffers for smooth animation (double-buffered display)
+//}
 
-    player->update(deltaTime);
-    background->update(deltaTime);  // Update background based on deltaTime
+//void UserControls(unsigned char key, int x, int y) {
+//    switch (key) {
+//        case ' ': {
+//            player->jump();
+//            break;
+//        }
+//    }
+//}
 
-    glClear(GL_COLOR_BUFFER_BIT); // Clear color buffer
-
-    background->render(); // Render background
-    player->render();     // Render player
-    block->render();
-
-    glutSwapBuffers();    // Swap buffers for smooth animation (double-buffered display)
-}
-
-void UserControls(unsigned char key, int x, int y) {
-    switch (key) {
-        case ' ': {
-            player->jump();
-            break;
-        }
-    }
-}
-
-void Cleanup(void)
-{
-    delete backgroundShader;
-    delete background;
-    delete playerShader;
-    delete playerTexture;
-    delete player;
-}
+//void Cleanup(void)
+//{
+//    delete backgroundShader;
+//    delete background;
+//    delete playerShader;
+//    delete playerTexture;
+//    delete player;
+//}
 
 int main(int argc, char* argv[])
 {
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB); // Set up a double-buffered display mode
     glutInitWindowPosition(100, 100);            // Initial window position
     glutInitWindowSize(1600, 960);                // Window dimensions
     glutCreateWindow("Grafica pe calculator - primul exemplu"); // Window title
-    glewInit();                                  // Initialize GLEW
+    glewInit();  
+    
+    World* world = World::getInstance();
 
     // Set up rendering and cleanup functions
-    glutDisplayFunc(RenderFunction);
-    glutCloseFunc(Cleanup);
+    glutDisplayFunc(World::render);
+    //glutCloseFunc(Cleanup);
 
-    // Set up shaders, background, and player
-    backgroundShader = new Shader("background.vert", "background.frag");
-    background = new Background(backgroundShader);
-
-    playerShader = new Shader("player.vert", "player.frag");
-    playerTexture = new Texture("player.jpg");
-    player = new Player(playerShader, playerTexture);
-
-    blockShader = new Shader("block.vert", "block.frag");
-    blockTexture = new Texture("block.png");
-    block = new Block(blockShader, blockTexture);
-
-    glutKeyboardFunc(UserControls);
+    glutKeyboardFunc(World::input);
 
     // Initialize timer function to control frame rate
     glutTimerFunc(frameDelay, TimerFunction, 0);
