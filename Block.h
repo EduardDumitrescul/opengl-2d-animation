@@ -32,4 +32,9 @@ public:
 	void setPosition(float x, float y);
 	void render();
 	void freeResources();
+
+	float getWidth() const;
+	float getHeight() const;
+	float getXPosition() const;
+	float getYPosition() const;
 };

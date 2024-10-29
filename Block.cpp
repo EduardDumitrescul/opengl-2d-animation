@@ -42,4 +42,26 @@ void Block::render()
 
 void Block::freeResources()
 {
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+}
+
+float Block::getWidth() const
+{
+	return width;
+}
+
+float Block::getHeight() const
+{
+	return height;
+}
+
+float Block::getXPosition() const
+{
+	return xPosition;
+}
+
+float Block::getYPosition() const
+{
+	return yPosition;
 }

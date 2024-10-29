@@ -1,23 +1,31 @@
+#pragma once
+
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include "base/Shader.h"
 #include "Texture.h"
 #include <string>
 #include <vector>
+#include "CollisionDetector.h"
+#include "Collision.h"
+#include "World.h"
+
+class World;
 
 class Player {
 private:
 	const std::string scaleMatrixTag = "scaleMatrix";
 	const std::string translateMatrixTag = "translateMatrix";
 	const std::string rotationMatrixTag = "rotationMatrix";
-
+	
+	World* world = nullptr;
 	Shader* shader = nullptr;
 	Texture* texture = nullptr;
 
 	float xPosition = 0, yPosition = 0;
 	float height = 2.0/24, width = 2.0/40;
 
-	bool isInAir = false;
+	bool isInAir = true;
 	float gravitationalAcceleration = 10, yVelocity = 0;
 	float rotationAngle = 0, rotationSpeed = 0;
 
@@ -35,12 +43,17 @@ private:
 
 public:
 
-	Player(Shader* shader, Texture* texture);
+	Player(World* world, Shader* shader, Texture* texture);
 
 	void render();
 	void freeResources();
 	void update(int deltaTime);
 	void jump();
+
+	float getWidth() const;
+	float getHeight() const;
+	float getXPosition() const;
+	float getYPosition() const;
 };
 
 

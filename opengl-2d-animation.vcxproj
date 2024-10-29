@@ -177,6 +177,8 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -185,10 +187,13 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
     <ClCompile Include="src\imageloader.cpp" />
     <ClCompile Include="src\loadShaders.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="include\base\Shader.h" />
     <ClInclude Include="include\glad\glad.h" />
     <ClInclude Include="include\GLFW\glfw3.h" />

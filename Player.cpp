@@ -1,7 +1,8 @@
-#include <GL/glew.h>
+﻿#include <GL/glew.h>
 #include <GL/freeglut.h>
 #include "base/Shader.h"
 #include "Player.h"
+#include "World.h"
 
 # define M_PI  3.14159265358979323846
 
@@ -20,7 +21,8 @@ float Player::closestValue(float value, std::vector<float> set)
 	return closestValue;
 }
 
-Player::Player(Shader* shader, Texture* texture) {
+Player::Player(World* world, Shader* shader, Texture* texture) {
+	this->world = world;
 	this->shader = shader;
 	this->texture = texture;
 
@@ -61,27 +63,45 @@ void Player::freeResources() {
 
 void Player::update(int deltaTime)
 {
-	std::cout << rotationAngle << '\n';
-	if (isInAir) {
-		rotationAngle += rotationSpeed * deltaTime / 1e3;
-		if (yPosition >= 0) {
-			yPosition += yVelocity * deltaTime / 1000;
-			yVelocity -= gravitationalAcceleration * deltaTime / 1e3;
+	// Check for collision below the player
+	float collision = world->detectCollisionDown();
+	//std::cout << collision << '\n';
+
+	// If a block is detected beneath the player
+	if (collision > 1e-7) {
+		std::cout << "down\n";
+		// Wrap rotation angle to stay within [0, 2π)
+		while (rotationAngle >= 2 * M_PI) {
+			rotationAngle -= 2 * M_PI;
 		}
-		if (yPosition < 0) {
-			while (rotationAngle >= 2 * M_PI) {
-				rotationAngle -= 2 * M_PI;
-			}
-			while (rotationAngle < 0) {
-				rotationAngle += 2 * M_PI;
-			}
-			rotationAngle = closestValue(rotationAngle, { 0, M_PI / 2, M_PI, 3 * M_PI / 2, 2 * M_PI });
-			yPosition = 0;
-			yVelocity = 0;
-			isInAir = false;
+		while (rotationAngle < 0) {
+			rotationAngle += 2 * M_PI;
 		}
+
+		// Adjust position to the top of the block
+		yPosition += collision;
+
+		// Snap rotation angle to nearest right angle
+		rotationAngle = closestValue(rotationAngle, { 0, M_PI / 2, M_PI, 3 * M_PI / 2, 2 * M_PI });
+
+		// Reset velocity as the player has landed
+		yVelocity = 0;
+		isInAir = false;
+	}
+	else if(isInAir){
+		std::cout << "jump" << " " << yVelocity << '\n';
+		// No block detected beneath the player; apply gravity
+		rotationAngle += rotationSpeed * deltaTime / 1000.0;
+
+		// Apply vertical movement and gravity
+		yPosition += yVelocity * deltaTime / 1000.0;
+		yVelocity -= gravitationalAcceleration * deltaTime / 1000.0;
+	}
+	else if (collision < 0) {
+		isInAir = true;
 	}
 }
+
 
 void Player::jump()
 {
@@ -90,4 +110,24 @@ void Player::jump()
 		rotationSpeed = -0.98 * M_PI / (2 * yVelocity / gravitationalAcceleration);
 		isInAir = true;
 	}
+}
+
+float Player::getWidth() const
+{
+	return width;
+}
+
+float Player::getHeight() const
+{
+	return height;
+}
+
+float Player::getXPosition() const
+{
+	return xPosition;
+}
+
+float Player::getYPosition() const
+{
+	return yPosition;
 }

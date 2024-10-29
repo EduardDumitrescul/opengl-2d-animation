@@ -1,9 +1,10 @@
 #pragma once
 #include "base/Shader.h"
 #include "Texture.h"
-#include "Player.h"
 #include "Background.h"
 #include "Block.h"
+#include "CollisionDetector.h"
+#include "Player.h"
 
 class World {
 private:
@@ -41,6 +42,7 @@ private:
 	};
 
 	Block* blocks[24][80];
+	CollisionDetector* collisionDetector;
 
 	float offset = 0;
 	float speed = 0.01;
@@ -56,95 +58,27 @@ private:
 	Player* player;
 	Background* background;
 	
-	void loadShaders() {
-		playerShader = new Shader("player.vert", "player.frag");
-		backgroundShader = new Shader("background.vert", "background.frag");
-		blockShader = new Shader("block.vert", "block.frag");
-	}
+	void loadShaders();
 
-	void loadTextures() {
-		playerTexture = new Texture("player.jpg");
-		blockTexture = new Texture("block.png");
-	}
+	void loadTextures();
 
-	void createObjects() {
-		player = new Player(playerShader, playerTexture);
-		background =new  Background(backgroundShader);
-	}
+	void createObjects();
 
-	void loadBlocks() {
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				if (map[i][j] == 'x') {
-					blocks[i][j] = new Block(blockShader, blockTexture);
-				}
-			}
-		}
-	}
+	void loadBlocks();
 
-	void renderBlocks() {
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				if (map[i][j] == 'x') {
-					float x = (j - 20) * blockWidth + offset;
-					if (x < -1) {
-						x += (width - 1) * blockWidth;
-					}
-					float y = ((height - i) - 12) * blockHeight;
-					blocks[i][j]->setPosition(x, y);
-					blocks[i][j]->render();
-				}
-			}
-		}
-	}
+	void renderBlocks();
 
-	void update() {
-		int currentTime = glutGet(GLUT_ELAPSED_TIME); // Get current time in milliseconds
-		int deltaTime = currentTime - previousTime;
-		previousTime = currentTime;
+	void update();
 
-		offset -= speed;
-		if (offset < -width * blockWidth) {
-			offset += width * blockWidth;
-		}
+	void initCollisionDetector();
 
-		player->update(deltaTime);
-		background->update(deltaTime);
-	}
-
-	World() {
-		loadShaders();
-		loadTextures();
-		createObjects();
-		loadBlocks();
-	}
+	World();
 public:
-	static void render() {
-		instance->update();
-		glClear(GL_COLOR_BUFFER_BIT); 
+	static void render();
 
-		instance->background->render();
-		instance->player->render();
-		instance->renderBlocks();
+	static void input(unsigned char key, int x, int y);
 
-		glutSwapBuffers();
-	}
+	static World* getInstance();
 
-	static void input(unsigned char key, int x, int y) {
-		switch (key) {
-			case ' ': {
-				instance->player->jump();
-				break;
-			}
-		}
-	}
-
-	static World* getInstance() {
-		if (instance == nullptr) {
-			instance = new World();
-		}
-		return instance;
-	}
+	float detectCollisionDown();
 };
-
-World* World::instance = nullptr;
