@@ -42,7 +42,8 @@ private:
 
 	Block* blocks[24][80];
 
-	int columnOffset = 0;
+	float offset = 0;
+	float speed = 0.01;
 
 
 	Shader* playerShader;
@@ -85,7 +86,12 @@ private:
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if (map[i][j] == 'x') {
-					blocks[i][j]->setPosition(-(j - 20) * blockWidth, -(i - 12) * blockHeight);
+					float x = (j - 20) * blockWidth + offset;
+					if (x < -1) {
+						x += (width - 1) * blockWidth;
+					}
+					float y = ((height - i) - 12) * blockHeight;
+					blocks[i][j]->setPosition(x, y);
 					blocks[i][j]->render();
 				}
 			}
@@ -96,6 +102,11 @@ private:
 		int currentTime = glutGet(GLUT_ELAPSED_TIME); // Get current time in milliseconds
 		int deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
+
+		offset -= speed;
+		if (offset < -width * blockWidth) {
+			offset += width * blockWidth;
+		}
 
 		player->update(deltaTime);
 		background->update(deltaTime);
