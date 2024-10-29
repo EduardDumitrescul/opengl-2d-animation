@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Background.h"
 #include "Texture.h"
+#include "Block.h"
 
 Shader* backgroundShader;
 Background* background;
@@ -16,6 +17,10 @@ Background* background;
 Shader* playerShader;
 Texture* playerTexture;
 Player* player;
+
+Shader* blockShader;
+Texture* blockTexture;
+Block* block;
 
 int previousTime = 0;
 const int FPS = 60;
@@ -41,6 +46,7 @@ void RenderFunction(void)
 
     background->render(); // Render background
     player->render();     // Render player
+    block->render();
 
     glutSwapBuffers();    // Swap buffers for smooth animation (double-buffered display)
 }
@@ -83,6 +89,10 @@ int main(int argc, char* argv[])
     playerShader = new Shader("player.vert", "player.frag");
     playerTexture = new Texture("player.jpg");
     player = new Player(playerShader, playerTexture);
+
+    blockShader = new Shader("block.vert", "block.frag");
+    blockTexture = new Texture("block.png");
+    block = new Block(blockShader, blockTexture);
 
     glutKeyboardFunc(UserControls);
 

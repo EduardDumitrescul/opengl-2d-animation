@@ -100,6 +100,9 @@
     <Filter Include="Resource Files\shaders\background">
       <UniqueIdentifier>{00bc2f92-8fc2-4abe-866e-00d00b73bc30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\shaders\block">
+      <UniqueIdentifier>{41cbe785-9c9c-4ff5-8426-c70cef6b4d36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -127,6 +130,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1034,6 +1040,9 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files\base</Filter>
     </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="include\glm\CMakeLists.txt">
@@ -1527,9 +1536,18 @@
     <None Include="background.vert">
       <Filter>Resource Files\shaders\background</Filter>
     </None>
+    <None Include="block.frag">
+      <Filter>Resource Files\shaders\block</Filter>
+    </None>
+    <None Include="block.vert">
+      <Filter>Resource Files\shaders\block</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="player.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="block.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
