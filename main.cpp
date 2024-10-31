@@ -19,42 +19,6 @@ void TimerFunction(int value)
     glutTimerFunc(frameDelay, TimerFunction, 0);
 }
 
-//void RenderFunction(void)
-//{
-//    int currentTime = glutGet(GLUT_ELAPSED_TIME); // Get current time in milliseconds
-//    int deltaTime = currentTime - previousTime;
-//    previousTime = currentTime;
-//
-//    player->update(deltaTime);
-//    background->update(deltaTime);  // Update background based on deltaTime
-//
-//    glClear(GL_COLOR_BUFFER_BIT); // Clear color buffer
-//
-//    background->render(); // Render background
-//    player->render();     // Render player
-//    block->render();
-//
-//    glutSwapBuffers();    // Swap buffers for smooth animation (double-buffered display)
-//}
-
-//void UserControls(unsigned char key, int x, int y) {
-//    switch (key) {
-//        case ' ': {
-//            player->jump();
-//            break;
-//        }
-//    }
-//}
-
-//void Cleanup(void)
-//{
-//    delete backgroundShader;
-//    delete background;
-//    delete playerShader;
-//    delete playerTexture;
-//    delete player;
-//}
-
 int main(int argc, char* argv[])
 {
 

@@ -15,6 +15,7 @@ public:
 	CollisionDetector(Player* player, std::vector <Block*> blocks);
 
 	float detectDown();
+	float detectRight();
 	//Collision detectRight();
 };
 

@@ -63,14 +63,9 @@ void Player::freeResources() {
 
 void Player::update(int deltaTime)
 {
-	// Check for collision below the player
 	float collision = world->detectCollisionDown();
-	//std::cout << collision << '\n';
 
-	// If a block is detected beneath the player
 	if (collision > 1e-7) {
-		std::cout << "down\n";
-		// Wrap rotation angle to stay within [0, 2π)
 		while (rotationAngle >= 2 * M_PI) {
 			rotationAngle -= 2 * M_PI;
 		}
@@ -78,22 +73,16 @@ void Player::update(int deltaTime)
 			rotationAngle += 2 * M_PI;
 		}
 
-		// Adjust position to the top of the block
 		yPosition += collision;
 
-		// Snap rotation angle to nearest right angle
 		rotationAngle = closestValue(rotationAngle, { 0, M_PI / 2, M_PI, 3 * M_PI / 2, 2 * M_PI });
 
-		// Reset velocity as the player has landed
 		yVelocity = 0;
 		isInAir = false;
 	}
 	else if(isInAir){
-		std::cout << "jump" << " " << yVelocity << '\n';
-		// No block detected beneath the player; apply gravity
 		rotationAngle += rotationSpeed * deltaTime / 1000.0;
 
-		// Apply vertical movement and gravity
 		yPosition += yVelocity * deltaTime / 1000.0;
 		yVelocity -= gravitationalAcceleration * deltaTime / 1000.0;
 	}

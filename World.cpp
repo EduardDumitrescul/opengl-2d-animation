@@ -6,6 +6,9 @@
 #include "Block.h"
 #include "CollisionDetector.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H  
+
 
 void World::loadShaders() {
 	playerShader = new Shader("player.vert", "player.frag");
@@ -61,6 +64,10 @@ void World::update() {
 
 	player->update(deltaTime);
 	background->update(deltaTime);
+
+	if (detectCollisionRight() > 1e-5) {
+		ended = true;
+	}
 }
 
 void World::initCollisionDetector() {
@@ -76,6 +83,8 @@ void World::initCollisionDetector() {
 }
 
 World::World() {
+	startTime = glutGet(GLUT_ELAPSED_TIME);
+	ended = false;
 	loadShaders();
 	loadTextures();
 	createObjects();
@@ -83,16 +92,50 @@ World::World() {
 	initCollisionDetector();
 }
 
-void World::render() {
-	instance->update();
+void World::showEndScreen() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	instance->background->render();
-	instance->player->render();
-	instance->renderBlocks();
+	std::string scoreString = "Score: " + std::to_string(score);
+	
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glRasterPos2f(0.0f, 0.2f);
 
-	glutSwapBuffers();
+	glUseProgram(0);
+	glDisable(GL_TEXTURE_2D);
+
+	std::string msg = "Game over";
+	for (int i = 0; i < msg.size(); i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, msg[i]);
+	}
+	glRasterPos2f(0.0f, 0.0f);
+
+	for (int i = 0; i < scoreString.size(); i++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, scoreString[i]);
+	}
+
 }
+
+
+
+void World::render() {
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	if (instance->ended == false) {
+		instance->update(); 
+		instance->background->render();
+		instance->player->render(); 
+		instance->renderBlocks(); 
+		instance->score = glutGet(GLUT_ELAPSED_TIME) - instance->startTime;
+	}
+	else {
+
+		glColor3f(1.0f, 1.0f, 1.0f); 
+		instance->showEndScreen(); 
+	}
+
+	glutSwapBuffers(); 
+}
+
 
 void World::input(unsigned char key, int x, int y) {
 	switch (key) {
@@ -112,6 +155,9 @@ World* World::getInstance() {
 
 float World::detectCollisionDown() {
 	return collisionDetector->detectDown();
+}
+float World::detectCollisionRight() {
+	return collisionDetector->detectRight();
 }
 
 World* World::instance = nullptr;

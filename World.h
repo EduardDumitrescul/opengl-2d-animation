@@ -10,6 +10,10 @@ class World {
 private:
 	static World* instance;
 
+	int ended = true;
+	int score = 0;
+
+	int startTime;
 	int previousTime = 0;
 	const int width = 80, height = 24;
 	const float blockWidth = 2.0 / 40, blockHeight = 2.0 / 24;
@@ -33,10 +37,10 @@ private:
 		"xxx........................................................................xxxx",
 		"................................................................xxxxxxxx.......",
 		"...............................................................................",
-		"...........................xxxxxxxxxxxxxxxxxxxxxxxxx...........................",
-		"......................xxxx.....................................................",
-		"................xxxx..xxxx..x..................................................",
-		"........xxxxx...xxxx..xxxx........x...........x................................",
+		".........................................................x....................",
+		"......................xxxx...............................x.....................",
+		"................xxxx..xxxx...............................x........x............",
+		"........xxxxx...xxxx..xxxx..................x.....................x............",
 		"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		"...............................................................................",
 	};
@@ -73,6 +77,8 @@ private:
 	void initCollisionDetector();
 
 	World();
+
+	void showEndScreen();
 public:
 	static void render();
 
@@ -81,4 +87,6 @@ public:
 	static World* getInstance();
 
 	float detectCollisionDown();
+
+	float detectCollisionRight();
 };
