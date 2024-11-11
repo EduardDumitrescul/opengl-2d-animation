@@ -1,4 +1,9 @@
 # OpenGL Geometry Dash
+Eduard-Valentin Dumitrescul
+
+Grupa 332
+
+[link github](https://github.com/EduardDumitrescul/opengl-2d-animation/tree/master)
 
 ## Conceptul proiectului
 Geometry Dash implementat cu ajutorul OpenGL
@@ -12,6 +17,12 @@ Geometry Dash implementat cu ajutorul OpenGL
 - detectarea coliziunilor
 - animatie pentru saritura/cadere
 - harta infinita 
+
+## Modificari
+Jocul se termina in momentul in care jucatorul se loveste de un block, 
+dupa care se afiseaza pe ecran scorul obtinut.
+
+[demo](https://github.com/EduardDumitrescul/opengl-2d-animation/blob/master/demo.gif)
 
 ## Capturi de ecran
 <img width="565" alt="{ED490D99-8C87-4339-A2E3-156B5AA2BEC7}" src="https://github.com/user-attachments/assets/957726f7-6087-47fa-892b-8b6ffb67c6b2">
